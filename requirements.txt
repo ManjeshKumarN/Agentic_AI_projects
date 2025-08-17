@@ -1,0 +1,4 @@
+pandas
+langgrpah
+langchain_groq
+langchain_core
