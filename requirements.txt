@@ -1,4 +1,8 @@
 pandas
-langgrpah
-langchain_groq
-langchain_core
+langgraph
+langchain-groq
+langchain-core
+langchain-community
+streamlit
+faiss-cpu
+tavily-python
