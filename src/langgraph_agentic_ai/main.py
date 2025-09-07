@@ -20,7 +20,7 @@ def load_langgraph_agentic_app():
         st.error("Error: Failed to load user input from the UI")
         return
 
-    user_message = st.chat_input("Enter your message:")
+    user_message = st.chat_input("Enter your message:") # chat input for user message at the bottom
 
     if not user_message:
         st.warning("Please enter a message to proceed")
@@ -45,11 +45,16 @@ def load_langgraph_agentic_app():
             st.error("Error: No use case selected. Please select a use case to proceed.")
             return
         
+        selected_usecase = user_input.get("selected_usecase")
+        if not selected_usecase:
+            st.error("Error: No use case selected. Please select a use case to proceed.")
+            return
+        
         # load the graphs
         graph_builder_instance = GraphBuilder(model=model)
         graph_instance = graph_builder_instance.setup_graph(usecase=selected_usecase)
 
         # display the output
-        display_ui = DisplayOutput(usecase=selected_usecase,graph=graph_instance,user_input=user_message)
+        display_ui = DisplayOutput(usecase=selected_usecase, graph=graph_instance, user_input=user_message)
         display_ui.display_output()
 

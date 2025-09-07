@@ -1,3 +1,4 @@
+import os
 import streamlit as st
 
 from src.langgraph_agentic_ai.ui.uiconfigfile import Config
@@ -19,7 +20,8 @@ class LoadStrealitui:  # class to load streamlit frontend
             # adding selectbox in sidebar for llm/model selection
             self.user_controls["selected_llm"] = st.selectbox("Select LLM", llm_options)
             if self.user_controls["selected_llm"] == "Groq":
-                model_options = self.config.get_groq_model_options()
+                model_options = self.config.get_groq_model_options() # as groq is selected load groq model options
+
                 self.user_controls["selected_groq_model"] = st.selectbox("Select groq model", model_options)
 
                 self.user_controls["GROQ_API_KEY"] = st.session_state["GROQ_API_KEY"] = st.text_input("API Key", type="password")
@@ -29,6 +31,11 @@ class LoadStrealitui:  # class to load streamlit frontend
 
             # adding selectbox in sidebar for usecase
             self.user_controls["selected_usecase"] = st.selectbox("Select Usecase", use_case_options)
+
+            if self.user_controls["selected_usecase"] == "Chatbot with Web": # as web require tavily API key to perform web search
+                os.environ["TAVILY_API_KEY"] = st.session_state["TAVILY_API_KEY"] = st.text_input("Tavily API Key", type="password")
+                if not os.environ["TAVILY_API_KEY"]:
+                    st.warning("Please enter the Tavily API Key to proceed")
+
         return self.user_controls
-        
             
